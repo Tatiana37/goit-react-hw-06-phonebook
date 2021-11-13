@@ -1,18 +1,21 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import s from './Form.module.css';
 import shortid from 'shortid';
 import { addContact } from '../../redux/Contacts/contact-actions';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 
-function Form({onSubmit}) {
+
+function Form() {
+  
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const nameId = shortid.generate();
   const telId = shortid.generate();
 
-
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -35,7 +38,8 @@ function Form({onSubmit}) {
       name,
       number,
     };
-    onSubmit(addNewContact);
+    // onSubmit(addNewContact);
+    dispatch(addContact(addNewContact));
     reset();
   };
 
@@ -84,23 +88,18 @@ function Form({onSubmit}) {
   }
 
 
-Form.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.number,
-  onSubmit: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//   name: PropTypes.string,
+//   number: PropTypes.number,
+//   onSubmit: PropTypes.func.isRequired,
+// };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmit: data =>dispatch(addContact(data)),
-  }
-};
-export default connect(null, mapDispatchToProps)(Form);
-
-
-// export default Form;
-// const mapStateToProps = (state) => {
+// const mapDispatchToProps = dispatch => {
 //   return {
-//     contactsList: state.contacts,
+//     onSubmit: data =>dispatch(addContact(data)),
 //   }
-//  };
+// };
+// export default connect(null, mapDispatchToProps)(Form);
+
+
+export default Form;

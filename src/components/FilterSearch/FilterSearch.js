@@ -8,7 +8,7 @@ import { filterContact } from '../../redux/Contacts/contact-actions';
 
 function FilterSearch() {
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.filter);
+  const value = useSelector(state => state.filter);
   return (
     <div className={s.filter}>
       <label className={s.label}>Find contacts by name</label>

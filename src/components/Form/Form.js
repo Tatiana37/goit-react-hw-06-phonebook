@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from './Form.module.css';
 import shortid from 'shortid';
+import { addContact } from '../../redux/Contacts/contact-actions';
 
 function Form({onSubmit}) {
   const [name, setName] = useState('');
@@ -9,6 +11,8 @@ function Form({onSubmit}) {
 
   const nameId = shortid.generate();
   const telId = shortid.generate();
+
+
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -26,12 +30,12 @@ function Form({onSubmit}) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const contact = {
+    const addNewContact = {
       id: shortid.generate(),
       name,
       number,
     };
-    onSubmit(contact);
+    onSubmit(addNewContact);
     reset();
   };
 
@@ -86,4 +90,17 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default Form;
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: data =>dispatch(addContact(data)),
+  }
+};
+export default connect(null, mapDispatchToProps)(Form);
+
+
+// export default Form;
+// const mapStateToProps = (state) => {
+//   return {
+//     contactsList: state.contacts,
+//   }
+//  };

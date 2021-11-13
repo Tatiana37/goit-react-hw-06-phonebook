@@ -1,7 +1,14 @@
-import PropTypes from 'prop-types';
-import s from './FilterSearch.module.css';
 
-function FilterSearch({ filter, onChange }) {
+import { useDispatch, useSelector } from 'react-redux';
+import s from './FilterSearch.module.css';
+import { filterContact } from '../../redux/Contacts/contact-actions';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+
+
+function FilterSearch() {
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.filter);
   return (
     <div className={s.filter}>
       <label className={s.label}>Find contacts by name</label>
@@ -9,16 +16,29 @@ function FilterSearch({ filter, onChange }) {
         className={s.input}
         type="text"
         name="name"
-        value={filter}
-        onChange={onChange}
+        value={value}
+        onChange={(e)=>dispatch(filterContact(e.target.value))}
+        // onChange={onChange}
       />
     </div>
   );
 }
 
-FilterSearch.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 export default FilterSearch;
+
+// const mapStateToProps = state => ({
+//   value: state.filter,
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   onChange: e => dispatch(filterContact(e.target.value)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(FilterSearch);
+
+
+// FilterSearch.propTypes = {
+//   value: PropTypes.string,
+//   onChange: PropTypes.func.isRequired,
+// };
